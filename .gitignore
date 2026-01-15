@@ -1,0 +1,11 @@
+# macOS System Files
+.DS_Store
+._*
+
+# Secrets & Local Config
+.env
+
+# Editor/IDE Settings
+.vscode/
+.idea/
+*.swp
