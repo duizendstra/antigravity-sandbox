@@ -12,36 +12,51 @@ Ensure the following three files exist in your build directory:
 2.  `entrypoint.sh` - Handles user creation, password generation, and DBus setup.
 3.  `supervisord.conf` - Manages the VNC, XRDP, and Web processes.
 
-## Build Instructions
-
-Open a terminal in the project directory and run the following command to build the image:
-
-```bash
-docker build -t antigravity-sandbox .
-```
-
-*Note: If you modify the entrypoint or configuration files, add the `--no-cache` flag to ensure Docker picks up the changes.*
-
-## Run Instructions
-
-To start the container, run the command below. Note the specific security flags required for the browser and GUI stability.
-
-```bash
-docker run -d \
-  --name antigravity-sandbox \
-  --cap-add=SYS_ADMIN \
-  --security-opt apparmor=unconfined \
-  -p 3390:3389 \
-  -p 6901:6901 \
-  -e PASSWORD=SecretPassword123 \
-  --shm-size=1g \
-  -v $(pwd)/antigravity-data:/home/antigravity \
-  ghcr.io/duizendstra/antigravity-sandbox:latest
-```
-
-> **Note:** The above command pulls the pre-built image from GitHub Container Registry. To build locally instead, replace the image name with `antigravity-sandbox` (after running the build command below).
-
-### Flag Explanations
+## Getting Started
+ 
+ You can either use the pre-built image from GitHub (Recommended) or build it yourself.
+ 
+ ### Option 1: Use Pre-built Image (Recommended)
+ 
+ Simply run the following command. Docker will automatically pull the image if it's not found locally.
+ 
+ ```bash
+ docker run -d \
+   --name antigravity-sandbox \
+   --cap-add=SYS_ADMIN \
+   --security-opt apparmor=unconfined \
+   -p 3390:3389 \
+   -p 6901:6901 \
+   -e PASSWORD=SecretPassword123 \
+   --shm-size=1g \
+   -v $(pwd)/antigravity-data:/home/antigravity \
+   ghcr.io/duizendstra/antigravity-sandbox:latest
+ ```
+ 
+ ### Option 2: Build Locally
+ 
+ If you want to modify the image or built it yourself:
+ 
+ 1.  Open a terminal in the project directory.
+ 2.  Build the image:
+     ```bash
+     docker build -t antigravity-sandbox .
+     ```
+ 3.  Run the image (note the image name is just `antigravity-sandbox`):
+     ```bash
+     docker run -d \
+       --name antigravity-sandbox \
+       --cap-add=SYS_ADMIN \
+       --security-opt apparmor=unconfined \
+       -p 3390:3389 \
+       -p 6901:6901 \
+       -e PASSWORD=SecretPassword123 \
+       --shm-size=1g \
+       -v $(pwd)/antigravity-data:/home/antigravity \
+       antigravity-sandbox
+     ```
+ 
+ ### Flag Explanations
 
 *   `--cap-add=SYS_ADMIN`: **Required.** Allows Chromium to create new user namespaces for its sandbox.
 *   `--security-opt apparmor=unconfined`: **Required.** Prevents Docker's default AppArmor profile from blocking the browser's internal isolation techniques.
