@@ -35,8 +35,11 @@ docker run -d \
   -p 6901:6901 \
   -e PASSWORD=SecretPassword123 \
   --shm-size=1g \
-  antigravity-sandbox
+  -v $(pwd)/antigravity-data:/home/antigravity \
+  ghcr.io/duizendstra/antigravity-sandbox:latest
 ```
+
+> **Note:** The above command pulls the pre-built image from GitHub Container Registry. To build locally instead, replace the image name with `antigravity-sandbox` (after running the build command below).
 
 ### Flag Explanations
 
@@ -46,6 +49,7 @@ docker run -d \
 *   `-p 3390:3389`: Maps the container's RDP port to host port 3390.
 *   `-p 6901:6901`: Maps the container's NoVNC port to host port 6901.
 *   `-e PASSWORD=...`: Sets the password for the `antigravity` user, `sudo` access, and VNC.
+*   `-v $(pwd)/antigravity-data:/home/antigravity`: **Persistence.** Maps the host folder `antigravity-data` to the container's home directory. This ensures your files are saved on your local machine and not lost when the container is deleted.
 
 ## Connection Methods
 

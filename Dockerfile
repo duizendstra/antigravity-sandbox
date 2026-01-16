@@ -17,7 +17,7 @@ ENV LC_ALL=en_US.UTF-8
 # ------------------------------------------
 RUN apt-get update && apt-get install -y --no-install-recommends \
     # System Utilities
-    sudo curl gnupg nano ca-certificates procps iproute2 locales \
+    sudo curl gnupg nano ca-certificates procps iproute2 locales git \
     # DBus (Critical: 'dbus' provides system.conf, 'dbus-x11' provides session launch)
     dbus dbus-x11 \
     # Remote Access (RDP & VNC)
